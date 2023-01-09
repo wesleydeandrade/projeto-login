@@ -9,7 +9,7 @@
 }
 
 body, html{
-    background-color: blueviolet;
+    background-image: linear-gradient(to top, rgb(150, 150, 150), rgba(24, 24, 24, 0.918));
     height: 100vh;
     width: 100vw;
 }
@@ -37,9 +37,9 @@ section#login{
 
 section#login > div#imagem{
     display: block;
-    background: blueviolet url(../imagens/fundo3.jpg) ;
-    background-size: cover;
-    background-position: left bottom;
+    background: rgba(128, 128, 128, 0.76) url(../imagens/fundo3.jpg) no-repeat;
+    background-size: cover ;
+    background-position: top bottom;
     height: 200px;
 }
 
