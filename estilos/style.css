@@ -35,13 +35,14 @@ section#login{
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.450);
 }
 
-section#login > div#imagem{
+/*section#login > div#imagem{
     display: block;
     background: rgba(128, 128, 128, 0.76) url(../imagens/fundo2.jpg) no-repeat;
     background-size: cover ;
     background-position: top bottom;
     height: 200px;
 }
+*/
 
 section#login > div#formulario{
     display: block;
