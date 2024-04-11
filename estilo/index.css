@@ -2,6 +2,7 @@
         body{
             font-family: Arial, Helvetica, sans-serif;
             
+            
         }
         div{
             position: absolute;
@@ -17,12 +18,16 @@
             font-size: 15px;
             width: 90%;
         }
+
+        a{
+            width: 90%;
+        }
         .inputSubmit{
             background-color: rgb(68, 142, 216);
             border: none;
             padding: 15px;
             width: 100%;
-            border-radius: 10px;
+            border-radius: 8px;
             color: white;
             font-size: 15px;
         }
@@ -30,4 +35,28 @@
             background-color: deepskyblue;
             cursor: pointer;
         }
-    
+
+        .registro{
+            background-color: rgb(68, 142, 216);
+            border: none;
+            padding: 15px;
+            padding-left: 23px;
+            margin-top: 6px;
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+            text-align: center; /* Centraliza o texto */
+            display: inline-block; /* Para garantir que o link seja exibido como bloco */
+            text-decoration: none; /* Remove sublinhado padrão dos links */
+            
+        }
+        .registro:hover{
+            background-color: deepskyblue;
+            cursor: pointer;
+        }
+
+
+
+       
+
+        

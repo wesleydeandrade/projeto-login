@@ -1,15 +1,78 @@
-#resumo {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    background-color: #f0f0f0;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f8f8; /* Adicionei uma cor de fundo para o corpo */
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    color: black;
+    margin: 20px auto; /* Centralizei a caixa horizontalmente e adicionei margem */
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #ffffff; /* Adicionei uma cor de fundo para a caixa */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adicionei uma sombra sutil */
+    max-width: 600px; /* Limita a largura máxima da caixa */
+}
+
+h1, h2 {
+    text-align: center; /* Centralizei os títulos */
+    margin-bottom: 20px; /* Adicionei margem inferior aos títulos */
+}
+
+fieldset {
+    border: 1px solid #ccc; /* Adicionei uma borda para o fieldset */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px; /* Adicionei margem inferior ao fieldset */
+}
+
+legend {
     border: 1px solid #ccc;
     padding: 10px;
-    display: none;
+    text-align: center;
+    background-color: white;
+    border-radius: 8px;
 }
 
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    
+form {
+    text-align: left; /* Alinhei o texto do formulário à esquerda */
 }
 
+p {
+    margin-bottom: 15px; /* Adicionei margem inferior aos parágrafos */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px; /* Adicionei margem inferior às etiquetas */
+}
+
+input[type="text"],
+input[type="date"],
+input[type="file"],
+select {
+    width: calc(100% - 10px); /* Ajustei a largura dos campos para preencher a largura do contêiner */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    background-color: #007bff; /* Cor de fundo azul para o botão de envio */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* O botão de envio deve ocupar a largura total */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b8; /* Cor de fundo azul mais escura ao passar o mouse */
+}
+
+#resumo {
+    /* Ocultar o resumo por padrão */
+    margin-top: 20px; /* Adicionei margem superior ao resumo */
+}

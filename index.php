@@ -16,7 +16,13 @@
             <br><br>
             <input type="password" name="senha" placeholder="Senha">
             <br><br>
+            
             <input class="inputSubmit" type="submit" name="submit" value="Entrar">
+            <br>
+            <a href="formulario.php" class="registro">Registrar</a>
+            
+
+            
         </form>
     </div>
 </body>

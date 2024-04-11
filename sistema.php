@@ -17,13 +17,13 @@ $logado = $_SESSION['nome'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema</title>
     <link rel="stylesheet" href="estilo/sistema.css">
-
-    
+   
 </head>
 <body>
+    <div class = "box">
     <h1>Acessou o sistema</h1>
     <?php
-    echo "<h1> Bem Vindo <u> $logado</></h1>";
+    echo "<h1> Olá, $logado</></h1>";
     ?>
     <h2>Envio de Certificação</h2>
     <fieldset>
@@ -86,6 +86,8 @@ $logado = $_SESSION['nome'];
             document.getElementById('formulario').reset();
         });
     </script>
+    </div>
 </body>
+
 </html>
 
