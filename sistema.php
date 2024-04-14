@@ -1,15 +1,13 @@
 <?php
 session_start();
-if(!isset($_SESSION['email']) || !isset($_SESSION['senha'])) {
+if (!isset($_SESSION['email']) || !isset($_SESSION['senha'])) {
     header('Location: index.php');
     exit();
 }
 
 $logado = $_SESSION['nome'];
-
-
+$usuario_id = $_SESSION['id']; // Definindo $usuario_id usando o ID do usuário na sessão
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +15,7 @@ $logado = $_SESSION['nome'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema</title>
     <link rel="stylesheet" href="estilo/terra.css">
-    
-   
 </head>
-    
 <body>
     <nav>
         <?php
@@ -28,22 +23,17 @@ $logado = $_SESSION['nome'];
      ?>
         <a href="sair.php" class="sair">Sair</a>
     </nav>
-
-
-
-    <div class = "box">
-    <h1>Acessou o sistema</h1>
-    
-    <h2>Envio de Certificação</h2>
-<fieldset>
-<legend>Registro de Certificação</legend>
-<form id="formulario" action="processar_certificado.php" method="POST" enctype="multipart/form-data">
-<input type="hidden" id="usuario_id" name="usuario_id" value="<?php echo $usuario_id; ?>">
-
-    <p>
-        <label for="titulo">Título da Certificação:</label>
-        <input type="text" id="titulo" name="titulo" required>
-    </p>
+    <div class="box">
+        <h1>Acessou o sistema</h1>
+        <h2>Envio de Certificação</h2>
+        <fieldset>
+            <legend>Registro de Certificação</legend>
+            <form id="formulario" action="processar_certificado.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="usuario_id" name="usuario_id" value="<?php echo $usuario_id; ?>">
+                <p>
+                    <label for="titulo">Título da Certificação:</label>
+                    <input type="text" id="titulo" name="titulo" required>
+                </p>
     <p>
         <label for="data_certificacao">Data da Certificação:</label>
         <input type="date" id="data_certificacao" name="data_certificacao" required>
@@ -58,14 +48,14 @@ $logado = $_SESSION['nome'];
     </p>
     <p>
         <label for="certificado_pdf">Certificado (PDF):</label>
-        <input type="file" id="certificado_pdf" name="certificado_pdf" accept="application/pdf" required>
+        <input type="file" id="certificado_pdf" name="certificado_pdf" accept="pdf" required>
     </p>
     <button type="submit">Enviar Certificado</button>
 </form>
 </fieldset>
 
     
-    <!-- Caixa de resumo -->
+   
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Seleciona o elemento de seleção de validade

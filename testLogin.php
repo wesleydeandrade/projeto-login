@@ -19,7 +19,8 @@ if(isset($_POST['email']) && isset($_POST['senha'])) {
         $_SESSION['email'] = $email;
         $_SESSION['senha'] = $senha;
         $_SESSION['nome'] = $nome;
-        $_SESSION['id'] = $id;
+        $_SESSION['id'] = $usuario_id;
+
         
         header('Location: sistema.php');
         exit(); // Termina o script após o redirecionamento
