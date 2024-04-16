@@ -15,22 +15,22 @@ if(isset($_POST["submit"])) {
     // Recupere os valores dos campos do formulário
     $nome = $_POST['nome'];
     $senha = $_POST['senha'];
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Hash da senha
     $email = $_POST['email'];
     $telefone = $_POST['telefone'];
     $genero = $_POST['genero'];
     $data_nascimento = $_POST['data_nascimento'];
     $cidade = $_POST['cidade'];
-    $estado = $_POST['estado'];
-    $endereco = $_POST['endereco'];
+ 
 
-    // Use prepared statements para segurança
-    $stmt = $conexao->prepare("INSERT INTO usuarios(nome, senha, email, telefone, sexo, data_nasc, cidade, estado, endereco) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssss", $nome, $senha, $email, $telefone, $genero, $data_nascimento, $cidade, $estado, $endereco);
+    $stmt = $conexao->prepare("INSERT INTO usuarios(nome,senha, senha_hash, email, telefone, sexo, data_nasc, cidade) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+    $stmt->bind_param("ssssssss", $nome,$senha, $senha_hash, $email, $telefone, $genero, $data_nascimento, $cidade);
     $stmt->execute();
 
     // Verifique se a inserção foi bem-sucedida
     if ($stmt->affected_rows > 0) {
-        echo "Inserção bem-sucedida!";
+        echo '<script>alert("Registro foi realizado com Sucesso!");</script>';
+        echo '<script>window.location.href = "index.php";</script>';
     } else {
         echo "Erro ao inserir no banco de dados.";
     }
@@ -43,18 +43,18 @@ if(isset($_POST["submit"])) {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário | GN</title>
     <link rel="stylesheet" href="estilo/formulario.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Importe os ícones do Font Awesome -->
 </head>
 <body>
     <div class="box">
-        <form action="formulario.php" method="post">
+        <form id="formRegistro" action="formulario.php" method="post" onsubmit="return validarSenha()">
             <fieldset>
                 <legend><b>Formulário de Acesso</b></legend>
                 
@@ -64,8 +64,21 @@ if(isset($_POST["submit"])) {
                 </div>
 
                 <div class="inputBox">
-                    <input type="password" name="senha" id="senha" class="inputUser" required>
+                    <input type="password" name="senha" id="senha" class="inputUser" required oninput="verificarRequisitosSenha()">
                     <label for="senha" class="labelInput">Senha</label>
+                    <span class="toggle-password" onclick="togglePassword()">
+                        <i id="toggleIcon" class="fas fa-eye"></i> <!-- Ícone inicial: olho aberto -->
+                    </span>
+                </div>
+
+                <div id="senhaRequisitos" class="password-instructions">
+                    <!-- Requisitos da senha serão exibidos aqui -->
+                </div>
+
+                <div class="inputBox">
+                    <input type="password" name="confirmar_senha" id="confirmar_senha" class="inputUser" required>
+                    <label for="confirmar_senha" class="labelInput">Confirmar Senha</label>
+                    <span id="senhaError" style="color: red;"></span> <!-- Para exibir mensagens de erro -->
                 </div>
 
                 <div class="inputBox">
@@ -100,19 +113,85 @@ if(isset($_POST["submit"])) {
                     <label for="cidade" class="labelInput">Cidade</label>
                 </div>
 
-                <div class="inputBox">
-                    <input type="text" name="estado" id="estado" class="inputUser" required>
-                    <label for="estado" class="labelInput">Estado</label>
-                </div>
-
-                <div class="inputBox">
-                    <input type="text" name="endereco" id="endereco" class="inputUser" required>
-                    <label for="endereco" class="labelInput">Endereço</label>
-                </div>
-
                 <input type="submit" name="submit" id="submit">
+                <p>
+                <button type="submit" onclick="window.location.href='index.php'" class="voltar">Voltar</button>
+                </p>
             </fieldset>
         </form>
     </div>
+    <script>
+        function togglePassword() {
+            var senhaInput = document.getElementById("senha");
+            var toggleIcon = document.getElementById("toggleIcon");
+            if (senhaInput.type === "password") {
+                senhaInput.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                senhaInput.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+
+        function verificarRequisitosSenha() {
+            // Código de verificação dos requisitos de senha
+        }
+
+        function validarSenha() {
+            var senha = document.getElementById("senha").value;
+            var confirmarSenha = document.getElementById("confirmar_senha").value;
+            var senhaError = document.getElementById("senhaError");
+
+            if (senha !== confirmarSenha) {
+                senhaError.textContent = "As senhas não coincidem.";
+                return false; // Impede o envio do formulário
+            } else {
+                senhaError.textContent = ""; // Limpa a mensagem de erro
+                return true; // Permite o envio do formulário
+            }
+        }
+        function verificarRequisitosSenha() {
+    var senha = document.getElementById("senha").value;
+    var senhaRequisitos = document.getElementById("senhaRequisitos");
+
+    // Texto com os requisitos da senha
+    var requisitos = [
+        "A senha deve ter pelo menos 8 caracteres",
+        "Deve conter letras maiúsculas",
+        "Deve conter letras minúsculas",
+        "Deve conter números",
+        "Deve conter caracteres especiais"
+    ];
+
+    var requisitosAtendidos = [
+        senha.length >= 8,
+        /[A-Z]/.test(senha),
+        /[a-z]/.test(senha),
+        /\d/.test(senha),
+        /[^A-Za-z0-9]/.test(senha)
+    ];
+
+    // Construir a string de requisitos
+    var requisitosString = "";
+    for (var i = 0; i < requisitos.length; i++) {
+        requisitosString += "- " + requisitos[i];
+        if (requisitosAtendidos[i]) {
+            requisitosString += " ✓"; // Adiciona um símbolo de verificação se o requisito for atendido
+        }
+        requisitosString += "<br>"; // Adiciona uma quebra de linha entre os requisitos
+    }
+
+    // Exibir os requisitos na página
+    senhaRequisitos.innerHTML = requisitosString;
+
+    // Ajustar o estilo dos requisitos
+    senhaRequisitos.style.fontSize = "0.7em"; // Diminuir o tamanho da fonte
+    senhaRequisitos.style.marginTop = "0px"; // Diminuir a margem superior
+    senhaRequisitos.style.marginBottom = "15px"; // Diminuir a margem inferior
+}
+
+    </script>
 </body>
 </html>

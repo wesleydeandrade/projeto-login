@@ -22,10 +22,11 @@ if(isset($_POST['email']) && isset($_POST['senha'])) {
         $_SESSION['id'] = $usuario_id;
 
         
-        header('Location: sistema.php');
+        header('Location: resumo.php');
         exit(); // Termina o script após o redirecionamento
     } else {
         header('Location: index.php');
+        echo '<script>alert("Email ou senha!");</script>';
         exit(); // Termina o script após o redirecionamento
     }
 }

@@ -1,9 +1,27 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f8f8f8; /* Adicionei uma cor de fundo para o corpo */
     margin: 0;
     padding: 0;
 }
+nav {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h1 {
+    margin: 0;
+}
+
+.sair {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
 
 .box {
     color: black;
@@ -58,7 +76,7 @@ select {
     border-radius: 5px;
 }
 
-button[type="submit"] {
+button{
     background-color: #007bff; /* Cor de fundo azul para o botão de envio */
     color: white;
     border: none;
@@ -68,9 +86,13 @@ button[type="submit"] {
     width: 100%; /* O botão de envio deve ocupar a largura total */
 }
 
-button[type="submit"]:hover {
+button:hover {
     background-color: #0056b8; /* Cor de fundo azul mais escura ao passar o mouse */
 }
+
+
+
+
 
 #resumo {
     /* Ocultar o resumo por padrão */

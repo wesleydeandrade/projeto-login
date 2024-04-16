@@ -5,7 +5,7 @@ session_start();
 // Verificar se o usuário está logado
 if (!isset($_SESSION['id'])) {
     // Redirecionar o usuário para a página de login se não estiver logado
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 
@@ -40,10 +40,18 @@ if (!$resultado) {
     <nav>
         <h1>Olá, <?php echo $_SESSION['nome']; ?></h1>
         <a href="sair.php" class="sair">Sair</a>
+       
     </nav>
 
+    <h1>Meus Certificados</h1>
+    
+    
+    <button class="button-submit" type="button" onclick="window.location.href='sistema.php'">Registrar Certificado</button>
+    
+       
+
     <div class="box">
-        <h1>Meus Certificados</h1>
+    
         <?php
         // Se houver certificados para exibir
         if ($resultado->num_rows > 0) {
@@ -53,16 +61,22 @@ if (!$resultado) {
                 echo "<h2>" . $row['titulo'] . "</h2>";
                 echo "<p><strong>Data de Certificação:</strong> " . $row['data_certificacao'] . "</p>";
                 echo "<p><strong>Validade:</strong> " . $row['validade'] . "</p>";
-                echo "<p><strong>Arquivo:</strong> <a href='baixar_certificado.php?certificado_id=" . $row['id'] . "'>Acessar Certificado</a></p>";
+                echo "<p><strong>Arquivo:</strong> <a href='baixar_certificado.php?certificado_id=" . $row['id'] . "' target='_blank'>Acessar Certificado</a></p>";
 
-                // Adicione mais campos conforme necessário
+
+               
                 echo "</fieldset>";
             }
         } else {
             echo "<p>Nenhum certificado encontrado.</p>";
         }
         ?>
+        
     </div>
+    
+
+
+    
     
 </body>
 </html>

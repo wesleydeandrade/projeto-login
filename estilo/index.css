@@ -1,62 +1,53 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-            
-            
-        }
-        div{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            padding: 30px;
-            border-radius: 15px;
-            color: black;
-        }
-        input{
-            padding: 15px;
-            font-size: 15px;
-            width: 90%;
-        }
+.container {
+    padding: 30px;
+    border-radius: 15px;
+    color: black;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
 
-        a{
-            width: 90%;
-        }
-        .inputSubmit{
-            background-color: rgb(68, 142, 216);
-            border: none;
-            padding: 15px;
-            width: 100%;
-            border-radius: 8px;
-            color: white;
-            font-size: 15px;
-        }
-        .inputSubmit:hover{
-            background-color: deepskyblue;
-            cursor: pointer;
-        }
+input,
+a,
+.inputSubmit {
+    padding: 15px;
+    font-size: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
 
-        .registro{
-            background-color: rgb(68, 142, 216);
-            border: none;
-            padding: 15px;
-            padding-left: 23px;
-            margin-top: 6px;
-            border-radius: 8px;
-            color: white;
-            font-size: 15px;
-            text-align: center; /* Centraliza o texto */
-            display: inline-block; /* Para garantir que o link seja exibido como bloco */
-            text-decoration: none; /* Remove sublinhado padrão dos links */
-            
-        }
-        .registro:hover{
-            background-color: deepskyblue;
-            cursor: pointer;
-        }
+.inputSubmit {
+    background-color: rgb(68, 142, 216);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
+.inputSubmit:hover,
+.registro:hover {
+    background-color: deepskyblue;
+}
 
-
-       
-
-        
+.registro {
+    background-color: rgb(68, 142, 216);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+}

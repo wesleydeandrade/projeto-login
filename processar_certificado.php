@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Exibe um pop-up informando que os dados foram inseridos com sucesso
             echo '<script>alert("Dados inseridos com sucesso!");</script>';
             // Redireciona o usuário de volta à página de registro
-            echo '<script>window.location.href = "sistema.php";</script>';
+            echo '<script>window.location.href = "resumo.php";</script>';
             exit(); // Certifica-se de que o script não continue a ser executado após o redirecionamento
         } else {
             echo "Erro ao inserir dados: " . $stmt->error;

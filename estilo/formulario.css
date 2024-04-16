@@ -1,5 +1,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .box {
@@ -10,7 +12,8 @@ body {
     transform: translate(-50%, -50%);
     padding: 15px;
     border-radius: 15px;
-    width: 40%;
+    width: 80%; /* Reduzi o tamanho para 80% da largura da tela */
+    max-width: 400px; /* Limita a largura máxima para garantir que não fique muito grande */
     background-color: #f8f8f8; /* Adicionei uma cor de fundo para destacar o contêiner */
 }
 
@@ -77,4 +80,39 @@ legend {
 
 #submit:hover {
     background-color: deepskyblue;
+}
+
+.voltar{
+    background-color: rgb(68, 142, 216);
+    width: 100%;
+    border: none;
+    padding: 15px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.voltar:hover {
+    background-color: deepskyblue;
+}
+
+.password-instructions {
+    color: black; /* Cor padrão */
+    list-style-type: none; /* Remove os marcadores de lista */
+    padding: 0; /* Remova o preenchimento padrão da lista */
+    margin-top: 5px; /* Reduzi o espaçamento entre os requisitos */
+    margin-bottom: 5px; /* Reduzi o espaçamento entre os requisitos */
+    font-size: 5px;
+}
+
+/* Estilo para requisitos atendidos */
+.requisitos-atendidos {
+    color: green; /* Defina a cor desejada para os requisitos atendidos */
+}
+
+@media screen and (max-width: 600px) {
+    .box {
+        width: 90%; /* Reduz ainda mais para telas menores */
+    }
 }

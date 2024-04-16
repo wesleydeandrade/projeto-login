@@ -9,12 +9,12 @@ $logado = $_SESSION['nome'];
 $usuario_id = $_SESSION['id']; // Definindo $usuario_id usando o ID do usuário na sessão
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema</title>
-    <link rel="stylesheet" href="estilo/terra.css">
+    <link rel="stylesheet" href="estilo/sistema.css">
 </head>
 <body>
     <nav>
@@ -24,8 +24,8 @@ $usuario_id = $_SESSION['id']; // Definindo $usuario_id usando o ID do usuário 
         <a href="sair.php" class="sair">Sair</a>
     </nav>
     <div class="box">
-        <h1>Acessou o sistema</h1>
-        <h2>Envio de Certificação</h2>
+        <h1>Envio de Certificação</h1>
+        
         <fieldset>
             <legend>Registro de Certificação</legend>
             <form id="formulario" action="processar_certificado.php" method="POST" enctype="multipart/form-data">
@@ -50,9 +50,18 @@ $usuario_id = $_SESSION['id']; // Definindo $usuario_id usando o ID do usuário 
         <label for="certificado_pdf">Certificado (PDF):</label>
         <input type="file" id="certificado_pdf" name="certificado_pdf" accept="pdf" required>
     </p>
-    <button type="submit">Enviar Certificado</button>
+    <button type="submit" class="button">Enviar Certificado</button>
+    <p>
+    <button type="submit" onclick="window.location.href='resumo.php'" class="voltar">Voltar</button>
+    </p>
+    
+    
+    
 </form>
 </fieldset>
+
+
+
 
     
    
@@ -82,6 +91,7 @@ $usuario_id = $_SESSION['id']; // Definindo $usuario_id usando o ID do usuário 
     });
 </script>
 </div>
+
 </body>
 
 </html>
