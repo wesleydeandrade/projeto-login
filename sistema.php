@@ -1,12 +1,12 @@
 <?php
 session_start();
-if (!isset($_SESSION['email']) || !isset($_SESSION['senha'])) {
-    header('Location: index.php');
+if (!isset($_SESSION['email'])) {
+    header('Location: index.html');
     exit();
 }
 
 $logado = $_SESSION['nome'];
-$usuario_id = $_SESSION['id']; // Definindo $usuario_id usando o ID do usuário na sessão
+$usuario_id = $_SESSION['id']; 
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -66,27 +66,24 @@ $usuario_id = $_SESSION['id']; // Definindo $usuario_id usando o ID do usuário 
     
    
     <script>
+        // para mostrar ou ocultar em caso de vitalicia ou temporaria.
     document.addEventListener("DOMContentLoaded", function() {
-        // Seleciona o elemento de seleção de validade
+        
         var validadeSelect = document.getElementById('validade');
-        // Seleciona o campo de entrada de data de vencimento
         var dataVencimentoInput = document.getElementById('data_vencimento');
 
-        // Define uma função para ser chamada quando a seleção de validade é alterada
         function toggleDataVencimentoInput() {
-            // Se a opção selecionada for 'Temporária', mostra o campo de entrada de data de vencimento
+            
             if (validadeSelect.value === 'temporaria') {
                 dataVencimentoInput.style.display = 'block';
             } else {
-                // Caso contrário, oculta o campo de entrada de data de vencimento
+                
                 dataVencimentoInput.style.display = 'none';
             }
         }
 
-        // Chama a função toggleDataVencimentoInput() quando a seleção de validade é alterada
         validadeSelect.addEventListener('change', toggleDataVencimentoInput);
 
-        // Chama a função toggleDataVencimentoInput() para garantir que o estado inicial seja correto
         toggleDataVencimentoInput();
     });
 </script>

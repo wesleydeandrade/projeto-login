@@ -1,27 +1,26 @@
 <?php
-// Iniciar a sessão
 session_start();
 
-// Verificar se o usuário está logado
+
 if (!isset($_SESSION['id'])) {
-    // Redirecionar o usuário para a página de login se não estiver logado
-    header("Location: index.php");
+    // se nao tiver logado manda para a pagina inicial
+    header("Location: index.html");
     exit();
 }
 
 include_once('config.php');
 
-// Recuperar o ID do usuário da sessão
+// pega o ID
 $usuario_id = $_SESSION['id'];
 
-// Consulta SQL para recuperar os formulários enviados pelo usuário atual
+//Pega as informações do usuario logado
 $sql = "SELECT * FROM certificado WHERE usuario_id = ?";
 $stmt = $conexao->prepare($sql);
 $stmt->bind_param("i", $usuario_id);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
-// Verificar se há erro na execução da consulta
+// caso de erro
 if (!$resultado) {
     die("Erro ao executar consulta: " . $conexao->error);
 }
@@ -53,7 +52,7 @@ if (!$resultado) {
     <div class="box">
     
         <?php
-        // Se houver certificados para exibir
+        // Exibi os certificados
         if ($resultado->num_rows > 0) {
             while ($row = $resultado->fetch_assoc()) {
                 echo "<fieldset>";

@@ -1,14 +1,14 @@
 .button-submit {
-    background-color: #007bff; /* Cor de fundo azul para o botão de envio */
+    background-color: #007bff;
     color: white;
     border: none;
     padding: 12px 20px;
     border-radius: 5px;
     cursor: pointer;
-    max-width: 600px; /* Largura igual a 100% */
-    box-sizing: border-box; /* Inclui padding e border na largura */
-    display: block; /* Torna o botão um elemento de bloco */
-    margin: 0 auto; /* Margem automática horizontal para centralizar */
+    max-width: 600px; 
+    box-sizing: border-box; 
+    display: block; 
+    margin: 0 auto; 
 }
 
 .button-submit:hover {

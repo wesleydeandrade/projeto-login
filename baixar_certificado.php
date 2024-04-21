@@ -13,7 +13,7 @@ if (isset($_GET['certificado_id'])) {
 
     if ($pdf_content) {
         header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename="certificado.pdf"'); // Nome padrão do arquivo
+        header('Content-Disposition: inline; filename="certificado.pdf"');
         header('Content-Transfer-Encoding: binary');
         header('Content-Length: ' . strlen($pdf_content));
         // Envie o conteúdo do arquivo para o navegador
