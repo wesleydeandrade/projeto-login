@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_POST["submit"])) {
-    // Evite comentários desnecessários
+   
     // print_r($_POST['nome']);
     // print_r('<br>');
     // print_r($_POST['email']);
@@ -9,10 +9,10 @@ if(isset($_POST["submit"])) {
     // print_r($_POST['telefone']);
     // print_r('<br>');
 
-    // Evite inclusões desnecessárias se o arquivo config.php já estiver incluído anteriormente
+ 
     include_once('config.php');
 
-    // Recupere os valores dos campos do formulário
+    // Peg valores
     $nome = $_POST['nome'];
     $senha = $_POST['senha'];
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Hash da senha
@@ -27,15 +27,15 @@ if(isset($_POST["submit"])) {
     $stmt->bind_param("ssssssss", $nome,$senha, $senha_hash, $email, $telefone, $genero, $data_nascimento, $cidade);
     $stmt->execute();
 
-    // Verifique se a inserção foi bem-sucedida
+    // Verifica se deu certo
     if ($stmt->affected_rows > 0) {
         echo '<script>alert("Registro foi realizado com Sucesso!");</script>';
-        echo '<script>window.location.href = "index.php";</script>';
+        echo '<script>window.location.href = "index.html";</script>';
     } else {
         echo "Erro ao inserir no banco de dados.";
     }
 
-    // Feche a declaração preparada
+ 
     $stmt->close();
 }
 
@@ -67,18 +67,18 @@ if(isset($_POST["submit"])) {
                     <input type="password" name="senha" id="senha" class="inputUser" required oninput="verificarRequisitosSenha()">
                     <label for="senha" class="labelInput">Senha</label>
                     <span class="toggle-password" onclick="togglePassword()">
-                        <i id="toggleIcon" class="fas fa-eye"></i> <!-- Ícone inicial: olho aberto -->
+                        <i id="toggleIcon" class="fas fa-eye"></i> 
                     </span>
                 </div>
 
                 <div id="senhaRequisitos" class="password-instructions">
-                    <!-- Requisitos da senha serão exibidos aqui -->
+                  
                 </div>
 
                 <div class="inputBox">
                     <input type="password" name="confirmar_senha" id="confirmar_senha" class="inputUser" required>
                     <label for="confirmar_senha" class="labelInput">Confirmar Senha</label>
-                    <span id="senhaError" style="color: red;"></span> <!-- Para exibir mensagens de erro -->
+                    <span id="senhaError" style="color: red;"></span> 
                 </div>
 
                 <div class="inputBox">
@@ -136,27 +136,10 @@ if(isset($_POST["submit"])) {
         }
 
         function verificarRequisitosSenha() {
-            // Código de verificação dos requisitos de senha
-        }
-
-        function validarSenha() {
-            var senha = document.getElementById("senha").value;
-            var confirmarSenha = document.getElementById("confirmar_senha").value;
-            var senhaError = document.getElementById("senhaError");
-
-            if (senha !== confirmarSenha) {
-                senhaError.textContent = "As senhas não coincidem.";
-                return false; // Impede o envio do formulário
-            } else {
-                senhaError.textContent = ""; // Limpa a mensagem de erro
-                return true; // Permite o envio do formulário
-            }
-        }
-        function verificarRequisitosSenha() {
     var senha = document.getElementById("senha").value;
     var senhaRequisitos = document.getElementById("senhaRequisitos");
 
-    // Texto com os requisitos da senha
+    // Campo do srequiditos da senha
     var requisitos = [
         "A senha deve ter pelo menos 8 caracteres",
         "Deve conter letras maiúsculas",
@@ -173,24 +156,41 @@ if(isset($_POST["submit"])) {
         /[^A-Za-z0-9]/.test(senha)
     ];
 
-    // Construir a string de requisitos
+    // Requisitos
     var requisitosString = "";
     for (var i = 0; i < requisitos.length; i++) {
-        requisitosString += "- " + requisitos[i];
+        
+        requisitosString += "- ";
+
+     
+        requisitosString += "<span";
+
+        // ficar verde enquanto digita
         if (requisitosAtendidos[i]) {
-            requisitosString += " ✓"; // Adiciona um símbolo de verificação se o requisito for atendido
+            requisitosString += " style='color:green'";
         }
-        requisitosString += "<br>"; // Adiciona uma quebra de linha entre os requisitos
+
+        
+        requisitosString += ">" + requisitos[i] + "</span>";
+
+        
+        if (requisitosAtendidos[i]) {
+            requisitosString += " ✓";
+        }
+
+        
+        requisitosString += "<br>";
     }
 
-    // Exibir os requisitos na página
+    
     senhaRequisitos.innerHTML = requisitosString;
 
-    // Ajustar o estilo dos requisitos
+    // estilo dos requisitos
     senhaRequisitos.style.fontSize = "0.7em"; // Diminuir o tamanho da fonte
     senhaRequisitos.style.marginTop = "0px"; // Diminuir a margem superior
     senhaRequisitos.style.marginBottom = "15px"; // Diminuir a margem inferior
 }
+
 
     </script>
 </body>

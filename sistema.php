@@ -52,7 +52,7 @@ $usuario_id = $_SESSION['id'];
     </p>
     <button type="submit" class="button">Enviar Certificado</button>
     <p>
-    <button type="submit" onclick="window.location.href='resumo.php'" class="voltar">Voltar</button>
+    <button type="button" onclick="window.location.href='resumo.php'" class="voltar">Voltar</button>
     </p>
     
     
@@ -60,11 +60,6 @@ $usuario_id = $_SESSION['id'];
 </form>
 </fieldset>
 
-
-
-
-    
-   
     <script>
         // para mostrar ou ocultar em caso de vitalicia ou temporaria.
     document.addEventListener("DOMContentLoaded", function() {
