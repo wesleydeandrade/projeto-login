@@ -33,15 +33,15 @@ if(isset($_POST['email']) && isset($_POST['senha'])) {
             exit(); 
         } else {
             // A senha está incorreta
-            echo '<script>alert("Registro foi realizado com Sucesso!");</script>';
-            header('Location: index.html?erro=senha_invalida');
-            exit(); 
+            echo '<script>alert("Senha incorreta!");</script>';
+            echo '<script>window.location.href = "index.html";</script>';
+            exit();
         }
     } else {
-        // Usuário não encontrado
-        
-        header('Location: index.html?erro=credenciais_invalidas');
-        exit(); 
+        // Email não encontrado
+        echo '<script>alert("Email não encontrado!");</script>';
+        echo '<script>window.location.href = "index.html";</script>';
+            exit();
     }
 }
 ?>
