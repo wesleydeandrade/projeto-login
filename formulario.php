@@ -2,14 +2,6 @@
 
 if(isset($_POST["submit"])) {
    
-    // print_r($_POST['nome']);
-    // print_r('<br>');
-    // print_r($_POST['email']);
-    // print_r('<br>');
-    // print_r($_POST['telefone']);
-    // print_r('<br>');
-
- 
     include_once('config.php');
 
     // Peg valores
@@ -21,26 +13,25 @@ if(isset($_POST["submit"])) {
     $genero = $_POST['genero'];
     $data_nascimento = $_POST['data_nascimento'];
     $cidade = $_POST['cidade'];
- 
+    $classe_docente = $_POST['classe_docente']; // Novo campo
 
-    $stmt = $conexao->prepare("INSERT INTO usuarios(nome,senha, senha_hash, email, telefone, sexo, data_nasc, cidade) VALUES (?, ?, ?, ?, ?, ?, ?,?)");
-    $stmt->bind_param("ssssssss", $nome,$senha, $senha_hash, $email, $telefone, $genero, $data_nascimento, $cidade);
+    // Ajusta a query para incluir a classe de docente
+    $stmt = $conexao->prepare("INSERT INTO usuarios(nome, senha_hash, email, telefone, sexo, data_nasc, cidade, classe_docente) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssss", $nome, $senha_hash, $email, $telefone, $genero, $data_nascimento, $cidade, $classe_docente);
     $stmt->execute();
 
     // Verifica se deu certo
     if ($stmt->affected_rows > 0) {
         echo '<script>alert("Registro foi realizado com Sucesso!");</script>';
-        echo '<script>window.location.href = "index.html";</script>';
+        echo '<script>window.location.href = "index.php";</script>';
     } else {
         echo "Erro ao inserir no banco de dados.";
     }
 
- 
     $stmt->close();
 }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -71,9 +62,7 @@ if(isset($_POST["submit"])) {
                     </span>
                 </div>
 
-                <div id="senhaRequisitos" class="password-instructions">
-                  
-                </div>
+                <div id="senhaRequisitos" class="password-instructions"></div>
 
                 <div class="inputBox">
                     <input type="password" name="confirmar_senha" id="confirmar_senha" class="inputUser" required>
@@ -113,6 +102,32 @@ if(isset($_POST["submit"])) {
                     <label for="cidade" class="labelInput">Cidade</label>
                 </div>
 
+                <!-- Novo campo: Classe de Docente -->
+                <div class="inputBox">
+                    <label for="classe_docente"><b>Classe de Docente:</b></label>
+                    <select name="classe_docente" id="classe_docente" class="inputUser" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="Professor de Creche">Professor de Creche</option>
+                        <option value="Professor de Atividades Complementares">Professor de Atividades Complementares</option>
+                        <option value="Professor de Educação Infantil">Professor de Educação Infantil</option>
+                        <option value="Professor de Ensino Fundamental I">Professor de Ensino Fundamental I</option>
+                        <option value="Professor de Educação Básica I">Professor de Educação Básica I</option>
+                        <option value="Professor de Educação Básica II - Música">Professor de Educação Básica II – Música</option>
+                        <option value="Professor de Educação Básica II - Ciências">Professor de Educação Básica II – Ciências</option>
+                        <option value="Professor de Educação Básica II - Educação Artística">Professor de Educação Básica II – Educação Artística</option>
+                        <option value="Professor de Educação Básica II - Educação Física">Professor de Educação Básica II – Educação Física</option>
+                        <option value="Professor de Educação Básica II - Espanhol">Professor de Educação Básica II – Espanhol</option>
+                        <option value="Professor de Educação Básica II - Geografia">Professor de Educação Básica II – Geografia</option>
+                        <option value="Professor de Educação Básica II - História">Professor de Educação Básica II – História</option>
+                        <option value="Professor de Educação Básica II - Inglês">Professor de Educação Básica II – Inglês</option>
+                        <option value="Professor de Educação Básica II - Matemática">Professor de Educação Básica II – Matemática</option>
+                        <option value="Professor de Educação Básica II - Português">Professor de Educação Básica II – Português</option>
+                        <option value="Professor de Educação Básica II - Educação Especial">Professor de Educação Básica II – Educação Especial</option>
+                        <option value="Professor de Educação Básica II - Judô">Professor de Educação Básica II – Judô</option>
+                        <option value="Professor Adjunto">Professor Adjunto</option>
+                    </select>
+                </div>
+
                 <input type="submit" name="submit" id="submit">
                 <p>
                 <button type="submit" onclick="window.location.href='index.php'" class="voltar">Voltar</button>
@@ -136,62 +151,55 @@ if(isset($_POST["submit"])) {
         }
 
         function verificarRequisitosSenha() {
-    var senha = document.getElementById("senha").value;
-    var senhaRequisitos = document.getElementById("senhaRequisitos");
+            var senha = document.getElementById("senha").value;
+            var senhaRequisitos = document.getElementById("senhaRequisitos");
 
-    // Campo do srequiditos da senha
-    var requisitos = [
-        "A senha deve ter pelo menos 8 caracteres",
-        "Deve conter letras maiúsculas",
-        "Deve conter letras minúsculas",
-        "Deve conter números",
-        "Deve conter caracteres especiais"
-    ];
+            var requisitos = [
+                "A senha deve ter pelo menos 8 caracteres",
+                "Deve conter letras maiúsculas",
+                "Deve conter letras minúsculas",
+                "Deve conter números",
+                "Deve conter caracteres especiais"
+            ];
 
-    var requisitosAtendidos = [
-        senha.length >= 8,
-        /[A-Z]/.test(senha),
-        /[a-z]/.test(senha),
-        /\d/.test(senha),
-        /[^A-Za-z0-9]/.test(senha)
-    ];
+            var requisitosAtendidos = [
+                senha.length >= 8,
+                /[A-Z]/.test(senha),
+                /[a-z]/.test(senha),
+                /\d/.test(senha),
+                /[^A-Za-z0-9]/.test(senha)
+            ];
 
-    // Requisitos
-    var requisitosString = "";
-    for (var i = 0; i < requisitos.length; i++) {
-        
-        requisitosString += "- ";
+            var requisitosString = "";
+            for (var i = 0; i < requisitos.length; i++) {
+                requisitosString += "- ";
+                requisitosString += "<span";
 
-     
-        requisitosString += "<span";
+                if (requisitosAtendidos[i]) {
+                    requisitosString += " style='color:green'";
+                }
 
-        // ficar verde enquanto digita
-        if (requisitosAtendidos[i]) {
-            requisitosString += " style='color:green'";
+                requisitosString += ">" + requisitos[i] + "</span>";
+                if (requisitosAtendidos[i]) {
+                    requisitosString += " ✓";
+                }
+                requisitosString += "<br>";
+            }
+
+            senhaRequisitos.innerHTML = requisitosString;
         }
 
-        
-        requisitosString += ">" + requisitos[i] + "</span>";
+        function validarSenha() {
+            var senha = document.getElementById("senha").value;
+            var confirmarSenha = document.getElementById("confirmar_senha").value;
 
-        
-        if (requisitosAtendidos[i]) {
-            requisitosString += " ✓";
+            if (senha !== confirmarSenha) {
+                document.getElementById("senhaError").innerText = "As senhas não coincidem";
+                return false;
+            }
+
+            return true;
         }
-
-        
-        requisitosString += "<br>";
-    }
-
-    
-    senhaRequisitos.innerHTML = requisitosString;
-
-    // estilo dos requisitos
-    senhaRequisitos.style.fontSize = "0.7em"; // Diminuir o tamanho da fonte
-    senhaRequisitos.style.marginTop = "0px"; // Diminuir a margem superior
-    senhaRequisitos.style.marginBottom = "15px"; // Diminuir a margem inferior
-}
-
-
     </script>
 </body>
 </html>
