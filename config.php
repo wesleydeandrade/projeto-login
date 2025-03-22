@@ -1,9 +1,9 @@
 <?php
 
-    $dbHost = 'Localhost';
-    $dbUsername = 'root';
-    $dbPassword = '';
-    $dbName = 'formulario';
+    $dbHost = 'sql312.infinityfree.com';
+    $dbUsername = 'if0_38354771';
+    $dbPassword = 'kPmwV3QzLLI';
+    $dbName = 'if0_38354771_formulario';
 
     $conexao = new mysqli($dbHost, $dbUsername, $dbPassword,$dbName);
 
