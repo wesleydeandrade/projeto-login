@@ -8,7 +8,7 @@ if(isset($_POST['email']) && isset($_POST['senha'])) {
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
   
-    $sql = "SELECT id, nome, senha_hash FROM usuarios WHERE email = ?";
+    $sql = "SELECT id, nome, senha_hash, nivel_acesso FROM usuarios WHERE email = ?";
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -20,6 +20,8 @@ if(isset($_POST['email']) && isset($_POST['senha'])) {
         $senha_hash_banco = $row['senha_hash'];
         $nome = $row['nome'];
         $usuario_id = $row['id'];
+        $permissao = $row['nivel_acesso'];
+
 
         if (password_verify($senha, $senha_hash_banco)) {
             
@@ -28,9 +30,22 @@ if(isset($_POST['email']) && isset($_POST['senha'])) {
             $_SESSION['email'] = $email;
             $_SESSION['nome'] = $nome;
             $_SESSION['id'] = $usuario_id;
+            $_SESSION['nivel_acesso'] = $permissao;
 
+            // controle de acesso
+            if ($permissao == 1) {
+                header('Location: administrador.php'); 
+                exit();
+            }elseif ($permissao == 2) {
+                header('Location: auditar.php');
+                exit();
+            }else{
             header('Location: resumo.php');
-            exit(); 
+            exit();
+            }
+
+            //header('Location: resumo.php');
+            //exit(); 
         } else {
             // A senha está incorreta
             echo '<script>alert("Senha incorreta!");</script>';
