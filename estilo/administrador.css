@@ -1,0 +1,124 @@
+/* Estilos para a página administradora */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333; /* Texto em cor padrão acessível */
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 1.5em; /* Ajuste para dispositivos menores */
+}
+
+.navbar .logout {
+    color: white;
+    text-decoration: none;
+    background-color: #e63946;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .logout:hover {
+    background-color: #d32f2f;
+}
+
+.container {
+    padding: 20px;
+    max-width: 1200px; /* Limita largura para monitores grandes */
+    margin: 0 auto; /* Centraliza a página */
+}
+
+.container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #007bff;
+    font-size: 1.8em;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-x: auto; /* Responsivo para telas pequenas */
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.95em; /* Melhor legibilidade em tabelas densas */
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.table td a.button-view,
+.table td a.button-delete {
+    text-decoration: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Melhor alinhamento */
+    margin-right: 5px; /* Espaço entre botões */
+}
+
+.table td a.button-view {
+    background-color: #007bff;
+}
+
+.table td a.button-view:hover {
+    background-color: #0056b3;
+}
+
+.table td span.no-action {
+    color: #999;
+    font-style: italic;
+}
+
+.table td a.button-delete {
+    background-color: #e63946;
+}
+
+.table td a.button-delete:hover {
+    background-color: #d32f2f;
+}
+
+/* Estilos adicionais para responsividade */
+@media (max-width: 768px) {
+    .navbar h1 {
+        font-size: 1.2em;
+    }
+    .navbar .logout {
+        font-size: 0.9em;
+        padding: 6px 10px;
+    }
+    .table th, .table td {
+        font-size: 0.85em;
+    }
+    .container h2 {
+        font-size: 1.5em;
+    }
+}
