@@ -8,15 +8,12 @@ if (!isset($_SESSION['id'])) {
 
 include_once('config.php');
 
-// Verifica se a conexão foi estabelecida
 if (!$conexao) {
     die("Erro ao conectar ao banco de dados: " . mysqli_connect_error());
 }
 
-// Pega o ID do usuário logado
 $usuario_id = $_SESSION['id'];
 
-// Pega as informações do usuário logado
 $sql_usuario = "SELECT nome, classe_docente FROM usuarios WHERE id = ?";
 $stmt_usuario = $conexao->prepare($sql_usuario);
 $stmt_usuario->bind_param("i", $usuario_id);
@@ -30,14 +27,12 @@ if ($resultado_usuario->num_rows === 0) {
 
 $usuario = $resultado_usuario->fetch_assoc();
 
-// Pega os certificados do usuário logado
 $sql_certificados = "SELECT * FROM certificado WHERE usuario_id = ?";
 $stmt_certificados = $conexao->prepare($sql_certificados);
 $stmt_certificados->bind_param("i", $usuario_id);
 $stmt_certificados->execute();
 $resultado_certificados = $stmt_certificados->get_result();
 
-// Mapeamento de tipos de certificados
 $tipos_certificado = [
     "certificado_aprovacao_concurso_outros" => "Certificado de Aprovação em Concurso Público de Outros Municípios",
     "certificado_aprovacao_concurso_municipio" => "Certificado de Aprovação em Concurso Público no Município",
@@ -64,48 +59,53 @@ $tipos_certificado = [
 </head>
 <body>
 
-    <nav>
-        <h1>Olá, <?php echo htmlspecialchars($usuario['nome']); ?></h1>
-        <p class="classe-docente"><?php echo htmlspecialchars($usuario['classe_docente']); ?></p>
-        <a href="sair.php" class="sair">Sair</a>
-    </nav>
+<nav>
+    <h1>Olá, <?php echo htmlspecialchars($usuario['nome']); ?></h1>
+    <p><?php echo htmlspecialchars($usuario['classe_docente']); ?></p>
+    <a href="sair.php">Sair</a>
+</nav>
 
-    <h1>Meus Certificados</h1>
-    
-    <button class="button-submit" type="button" onclick="window.location.href='sistema.php'">Registrar Certificado</button>
-    
-    <div class="box">
-    
-        <?php
-        // Exibe os certificados
-        if ($resultado_certificados->num_rows > 0) {
-            while ($row = $resultado_certificados->fetch_assoc()) {
-                echo "<fieldset>";
-                echo "<legend>Certificado</legend>";
-                echo "<h2>" . htmlspecialchars($row['titulo']) . "</h2>";
-                echo "<p><strong>Data de Certificação:</strong> " . htmlspecialchars($row['data_certificacao']) . "</p>";
-                echo "<p><strong>Validade:</strong> " . htmlspecialchars($row['validade']) . "</p>";
-                
-                // Mapeia o tipo de certificado, considerando valores nulos ou vazios
-                $tipo_certificado = $row['tipo_certificado'] ?? '';
-                $tipo_certificado_nome = isset($tipos_certificado[$tipo_certificado]) ? $tipos_certificado[$tipo_certificado] : "Tipo de Certificado Desconhecido";
-                
-                echo "<p><strong>Tipo de Certificado:</strong> " . $tipo_certificado_nome . "</p>"; // Exibe o tipo de certificado
-                
-                // Mostra a quantidade de horas apenas se não estiver vazia
-                if (!empty($row['quantidade_horas'])) {
-                    echo "<p><strong>Quantidade de Horas:</strong> " . htmlspecialchars($row['quantidade_horas']) . "</p>";
-                }
-                
-                echo "<p><strong>Arquivo:</strong> <a href='baixar_certificado.php?certificado_id=" . $row['id'] . "' target='_blank'>Acessar Certificado</a></p>";
-                echo "</fieldset>";
-            }
-        } else {
-            echo "<p>Nenhum certificado encontrado.</p>";
+<h1>Meus Certificados</h1>
+
+<a href="sistema.php" class="button-submit">Registrar Certificado</a>
+
+<div class="box">
+<?php
+if ($resultado_certificados->num_rows > 0) {
+    $total_pontuacao = 0;
+
+    while ($row = $resultado_certificados->fetch_assoc()) {
+        echo "<fieldset>";
+        echo "<legend>Certificado</legend>";
+        echo "<h2>" . htmlspecialchars($row['titulo']) . "</h2>";
+        echo "<p><strong>Data de Certificação:</strong> " . htmlspecialchars($row['data_certificacao']) . "</p>";
+        echo "<p><strong>Validade:</strong> " . htmlspecialchars($row['validade']) . "</p>";
+
+        $tipo_certificado = $row['tipo_certificado'] ?? '';
+        $tipo_certificado_nome = $tipos_certificado[$tipo_certificado] ?? "Tipo de Certificado Desconhecido";
+
+        echo "<p><strong>Tipo de Certificado:</strong> " . $tipo_certificado_nome . "</p>";
+
+        if (!empty($row['quantidade_horas'])) {
+            echo "<p><strong>Quantidade de Horas:</strong> " . htmlspecialchars($row['quantidade_horas']) . "</p>";
         }
-        ?>
-        
-    </div>
-    
+
+        $pontuacao_formatada = number_format($row['pontuacao'], 3);
+        echo "<p><strong>Pontuação:</strong> " . $pontuacao_formatada . "</p>";
+
+        echo "<p><a href='baixar_certificado.php?certificado_id=" . $row['id'] . "' target='_blank'>Acessar Certificado (PDF)</a></p>";
+        echo "</fieldset>";
+
+        $total_pontuacao += $row['pontuacao'];
+    }
+
+    echo "<h2>Total de Pontos: " . number_format($total_pontuacao, 3) . "</h2>";
+
+} else {
+    echo "<p>Nenhum certificado encontrado.</p>";
+}
+?>
+</div>
+
 </body>
 </html>
