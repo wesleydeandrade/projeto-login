@@ -1,0 +1,29 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+	
+}
+
+div h1 {
+	background-color: #007bff;
+	color: #fff;
+	padding: 10px 20px 10px;
+	text-transform: capitalize;
+}
+
+div table {
+	width: 100%;
+	border-collapse: collapse;
+    background-color: #fff;
+    overflow-x: auto;
+    position: absolute;
+    top: 80px;
+}
+
+div table th, td {
+	border: solid 1px black;
+	padding: 5px 10px 5px;
+	text-transform: capitalize;
+}
