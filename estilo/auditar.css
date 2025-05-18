@@ -1,0 +1,123 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+/*estilizando o cabeçalho*/
+.cabaçalho h1 {
+	background-color: #007bff;
+	color: #fff;
+	font-size: 26px;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 10px 0 10px;
+}
+
+.btn-sair {
+	background-color: red;
+	color: #fff;
+	font-size: 16px;
+	text-decoration: none;
+	border: solid 1px #fff; 
+	border-radius: 5px;
+	padding: 5px 6px 5px;
+	cursor: pointer;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.btn-sair:hover {	
+	background: tomato;
+}
+
+/*estizando o painel lateral*/
+body{
+	height: 100vh;
+}
+
+nav.painel-lateral{
+	width: auto;
+	height: auto;
+	background-color: #007bff;
+	padding: 10px 0 10px 0.3%;
+	white-space: nowrap;
+	border: solid 1px white;
+	border-radius: 3px;
+	position: fixed;
+	max-height: 90vh;
+	overflow-y: auto;
+}
+
+ul {
+	height: 100%;
+	list-style: none;
+}
+
+ul li.item-painel{
+	transition: 1s;
+}
+
+ul li.item-painel:hover{
+	background: deepskyblue;
+}
+
+ul li.item-painel a{
+	color: #fff;
+	text-decoration: none;
+	font-size: 20px;
+	margin: 10px;
+	line-height: 30px;
+}
+
+ul li.item-painel a .txt-link{
+	margin-left: 10px;
+	font-size: 16px;
+}
+
+ul li.item-painel a .icone > i{
+	font-size: 20px;
+}
+
+ul li.item-painel > p {
+	color: #fff;
+	font-weight: bold;
+	font-size: 20px;
+	padding: 5px 50px 20px;
+	background: #007bff;
+}
+
+/*estizando do conteúdo da página*/
+.corpo {
+	background: aliceblue;
+	border: solid 1px black;
+	border-radius: 4px;
+	position: absolute;
+	top: 70px;
+	left: 340px;
+	right: 10px;
+}
+
+.corpo h2 {
+	text-align: center;
+}
+
+.corpo p {
+	margin: 10px;
+}
+
+.corpo .btn-certicado {
+	font-size: 14px;
+	background: silver;
+	color: black;
+	cursor: pointer;
+	border: solid 1px black;
+	border-radius: 3px;
+	padding: 3px 3px 3px;
+}
+
+.corpo .btn-certicado:hover {
+	background: gainsboro;
+}
