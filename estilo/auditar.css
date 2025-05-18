@@ -33,91 +33,159 @@
 	background: tomato;
 }
 
-/*estizando o painel lateral*/
-body{
-	height: 100vh;
-}
 
-nav.painel-lateral{
-	width: auto;
-	height: auto;
+/* Painel lateral */
+nav.painel-lateral {
+	width: 310px;
+	
 	background-color: #007bff;
-	padding: 10px 0 10px 0.3%;
-	white-space: nowrap;
-	border: solid 1px white;
-	border-radius: 3px;
-	position: fixed;
-	max-height: 90vh;
+	padding: 15px 10px;
+	border-radius: 0 5px 5px 0;
 	overflow-y: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
 }
 
 ul {
-	height: 100%;
 	list-style: none;
 }
 
-ul li.item-painel{
-	transition: 1s;
+ul li.item-painel {
+	margin-bottom: 8px;
+	transition: background 0.3s;
+	padding: 8px;
+	border-radius: 4px;
 }
 
-ul li.item-painel:hover{
+ul li.item-painel:hover {
 	background: deepskyblue;
 }
 
-ul li.item-painel a{
+ul li.item-painel a {
 	color: #fff;
 	text-decoration: none;
-	font-size: 20px;
-	margin: 10px;
-	line-height: 30px;
-}
-
-ul li.item-painel a .txt-link{
-	margin-left: 10px;
+	display: flex;
+	align-items: center;
 	font-size: 16px;
 }
 
-ul li.item-painel a .icone > i{
-	font-size: 20px;
+ul li.item-painel a .txt-link {
+	margin-left: 10px;
+	font-size: 15px;
+}
+
+ul li.item-painel a .icone > i {
+	font-size: 18px;
 }
 
 ul li.item-painel > p {
 	color: #fff;
 	font-weight: bold;
-	font-size: 20px;
-	padding: 5px 50px 20px;
-	background: #007bff;
+	font-size: 18px;
+	margin: 15px 0 5px;
 }
 
 /*estizando do conteúdo da página*/
 .corpo {
-	background: aliceblue;
-	border: solid 1px black;
-	border-radius: 4px;
-	position: absolute;
-	top: 70px;
-	left: 340px;
-	right: 10px;
+	margin-left: 315px;
+	top: 10px;
+	position: relative;
+	background: #fff;
 }
 
-.corpo h2 {
+corpo h2 {
 	text-align: center;
+	margin-bottom: 20px;
+}
+
+.corpo h3 {
+	font-size: 18px;
+	color: #333;
+	margin-bottom: 8px;
+	border-left: 4px solid #007bff;
+	padding-left: 10px;
 }
 
 .corpo p {
-	margin: 10px;
+	margin: 10px 0;
+	color: #333;
+	font-size: 15px;
 }
 
 .corpo .btn-certicado {
 	font-size: 14px;
-	background: silver;
-	color: black;
+	background: #007bff;
+	color: white;
 	cursor: pointer;
-	border: solid 1px black;
-	border-radius: 3px;
-	padding: 3px 3px 3px;
+	border: none;
+	border-radius: 4px;
+	padding: 5px 10px;
+	transition: background 0.3s;
+	display: inline-block;
+	margin-top: 5px;
 }
 
 .corpo .btn-certicado:hover {
-	background: gainsboro;
+	background: #0056b3;
+}
+
+/* Tabela (se tiver) */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	font-size: 14px;
+}
+
+th, td {
+	border: 1px solid #ccc;
+	padding: 10px;
+	text-align: left;
+}
+
+th {
+	background-color: #f8f9fa;
+	font-weight: bold;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+tr.total {
+	background-color: #e0f7fa;
+	font-weight: bold;
+}
+
+/* Scroll personalizado */
+::-webkit-scrollbar {
+	width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #aaa;
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+	nav.painel-lateral {
+		display: none;
+	}
+
+	body {
+		flex-direction: column;
+	}
+
+	.corpo {
+		margin: 20px;
+		max-width: 100%;
+		margin-left: auto;
+	}
 }
