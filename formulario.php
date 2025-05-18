@@ -1,28 +1,26 @@
 <?php
-
-if(isset($_POST["submit"])) {
-   
+if (isset($_POST["submit"])) {
     include_once('config.php');
 
-    // Peg valores
+    // Pega valores do formulário
     $nome = $_POST['nome'];
     $senha = $_POST['senha'];
-    $senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Hash da senha
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
     $email = $_POST['email'];
     $telefone = $_POST['telefone'];
     $genero = $_POST['genero'];
     $data_nascimento = $_POST['data_nascimento'];
     $cidade = $_POST['cidade'];
-    $classe_docente = $_POST['classe_docente']; // Novo campo
+    $classe_docente = $_POST['classe_docente'];
+    $nivel_acesso = intval($_POST['nivel_acesso']);
 
-    // Ajusta a query para incluir a classe de docente
-    $stmt = $conexao->prepare("INSERT INTO usuarios(nome, senha_hash, email, telefone, sexo, data_nasc, cidade, classe_docente) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssss", $nome, $senha_hash, $email, $telefone, $genero, $data_nascimento, $cidade, $classe_docente);
+    // Insere no banco de dados
+    $stmt = $conexao->prepare("INSERT INTO usuarios (nome, senha_hash, email, telefone, sexo, data_nasc, cidade, classe_docente, nivel_acesso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssi", $nome, $senha_hash, $email, $telefone, $genero, $data_nascimento, $cidade, $classe_docente, $nivel_acesso);
     $stmt->execute();
 
-    // Verifica se deu certo
     if ($stmt->affected_rows > 0) {
-        echo '<script>alert("Registro foi realizado com Sucesso!");</script>';
+        echo '<script>alert("Registro realizado com sucesso!");</script>';
         echo '<script>window.location.href = "index.php";</script>';
     } else {
         echo "Erro ao inserir no banco de dados.";
@@ -30,25 +28,22 @@ if(isset($_POST["submit"])) {
 
     $stmt->close();
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário | GN</title>
     <link rel="stylesheet" href="estilo/formulario.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Importe os ícones do Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="box">
         <form id="formRegistro" action="formulario.php" method="post" onsubmit="return validarSenha()">
             <fieldset>
                 <legend><b>Formulário de Acesso</b></legend>
-                
+
                 <div class="inputBox">
                     <input type="text" name="nome" id="nome" class="inputUser" required>
                     <label for="nome" class="labelInput">Nome completo</label>
@@ -58,7 +53,7 @@ if(isset($_POST["submit"])) {
                     <input type="password" name="senha" id="senha" class="inputUser" required oninput="verificarRequisitosSenha()">
                     <label for="senha" class="labelInput">Senha</label>
                     <span class="toggle-password" onclick="togglePassword()">
-                        <i id="toggleIcon" class="fas fa-eye"></i> 
+                        <i id="toggleIcon" class="fas fa-eye"></i>
                     </span>
                 </div>
 
@@ -67,7 +62,7 @@ if(isset($_POST["submit"])) {
                 <div class="inputBox">
                     <input type="password" name="confirmar_senha" id="confirmar_senha" class="inputUser" required>
                     <label for="confirmar_senha" class="labelInput">Confirmar Senha</label>
-                    <span id="senhaError" style="color: red;"></span> 
+                    <span id="senhaError" style="color: red;"></span>
                 </div>
 
                 <div class="inputBox">
@@ -83,11 +78,9 @@ if(isset($_POST["submit"])) {
                 <div class="inputBox">
                     <p>Sexo:</p>
                     <input type="radio" id="feminino" name="genero" value="feminino" required>
-                    <label for="feminino">Feminino</label>
-                    <br>
+                    <label for="feminino">Feminino</label><br>
                     <input type="radio" id="masculino" name="genero" value="masculino" required>
-                    <label for="masculino">Masculino</label>
-                    <br>
+                    <label for="masculino">Masculino</label><br>
                     <input type="radio" id="outro" name="genero" value="outro" required>
                     <label for="outro">Outro</label>
                 </div>
@@ -102,7 +95,6 @@ if(isset($_POST["submit"])) {
                     <label for="cidade" class="labelInput">Cidade</label>
                 </div>
 
-                <!-- Novo campo: Classe de Docente -->
                 <div class="inputBox">
                     <label for="classe_docente"><b>Classe de Docente:</b></label>
                     <select name="classe_docente" id="classe_docente" class="inputUser" required>
@@ -125,36 +117,37 @@ if(isset($_POST["submit"])) {
                         <option value="Professor de Educação Básica II - Educação Especial">Professor de Educação Básica II – Educação Especial</option>
                         <option value="Professor de Educação Básica II - Judô">Professor de Educação Básica II – Judô</option>
                         <option value="Professor Adjunto">Professor Adjunto</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Auditor">Auditor</option>
                     </select>
                 </div>
 
-                <input type="submit" name="submit" id="submit">
-                <p>
-                <button type="submit" onclick="window.location.href='index.php'" class="voltar">Voltar</button>
-                </p>
+                <input type="hidden" name="nivel_acesso" id="nivel_acesso" value="0">
+
+                <input type="submit" name="submit" id="submit" value="Enviar">
+                <p><button type="button" onclick="window.location.href='index.php'" class="voltar">Voltar</button></p>
             </fieldset>
         </form>
     </div>
+
     <script>
         function togglePassword() {
-            var senhaInput = document.getElementById("senha");
-            var toggleIcon = document.getElementById("toggleIcon");
+            const senhaInput = document.getElementById("senha");
+            const toggleIcon = document.getElementById("toggleIcon");
             if (senhaInput.type === "password") {
                 senhaInput.type = "text";
-                toggleIcon.classList.remove("fa-eye");
-                toggleIcon.classList.add("fa-eye-slash");
+                toggleIcon.classList.replace("fa-eye", "fa-eye-slash");
             } else {
                 senhaInput.type = "password";
-                toggleIcon.classList.remove("fa-eye-slash");
-                toggleIcon.classList.add("fa-eye");
+                toggleIcon.classList.replace("fa-eye-slash", "fa-eye");
             }
         }
 
         function verificarRequisitosSenha() {
-            var senha = document.getElementById("senha").value;
-            var senhaRequisitos = document.getElementById("senhaRequisitos");
+            const senha = document.getElementById("senha").value;
+            const senhaRequisitos = document.getElementById("senhaRequisitos");
 
-            var requisitos = [
+            const requisitos = [
                 "A senha deve ter pelo menos 8 caracteres",
                 "Deve conter letras maiúsculas",
                 "Deve conter letras minúsculas",
@@ -162,7 +155,7 @@ if(isset($_POST["submit"])) {
                 "Deve conter caracteres especiais"
             ];
 
-            var requisitosAtendidos = [
+            const atendidos = [
                 senha.length >= 8,
                 /[A-Z]/.test(senha),
                 /[a-z]/.test(senha),
@@ -170,36 +163,36 @@ if(isset($_POST["submit"])) {
                 /[^A-Za-z0-9]/.test(senha)
             ];
 
-            var requisitosString = "";
-            for (var i = 0; i < requisitos.length; i++) {
-                requisitosString += "- ";
-                requisitosString += "<span";
-
-                if (requisitosAtendidos[i]) {
-                    requisitosString += " style='color:green'";
-                }
-
-                requisitosString += ">" + requisitos[i] + "</span>";
-                if (requisitosAtendidos[i]) {
-                    requisitosString += " ✓";
-                }
-                requisitosString += "<br>";
+            let html = "";
+            for (let i = 0; i < requisitos.length; i++) {
+                html += "- <span" + (atendidos[i] ? " style='color:green'" : "") + ">" + requisitos[i] + "</span>";
+                html += atendidos[i] ? " ✓" : "";
+                html += "<br>";
             }
-
-            senhaRequisitos.innerHTML = requisitosString;
+            senhaRequisitos.innerHTML = html;
         }
 
         function validarSenha() {
-            var senha = document.getElementById("senha").value;
-            var confirmarSenha = document.getElementById("confirmar_senha").value;
-
-            if (senha !== confirmarSenha) {
+            const senha = document.getElementById("senha").value;
+            const confirmar = document.getElementById("confirmar_senha").value;
+            if (senha !== confirmar) {
                 document.getElementById("senhaError").innerText = "As senhas não coincidem";
                 return false;
             }
-
             return true;
         }
+
+        // Define o nível de acesso com base na classe selecionada
+        document.getElementById("classe_docente").addEventListener("change", function () {
+            const valor = this.value;
+            let nivel = 0; // padrão para docentes
+            if (valor === "Administrador") {
+                nivel = 1;
+            } else if (valor === "Auditor") {
+                nivel = 2;
+            }
+            document.getElementById("nivel_acesso").value = nivel;
+        });
     </script>
 </body>
 </html>
